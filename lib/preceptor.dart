@@ -1,29 +1,36 @@
 import 'dart:math';
 
 class Preceptor {
-  static num _bias = 1;
-  static num _learning_rate = 0.1;
+  num bias;
+  num learning_rate;
+  Function activationFunction;
 
   List<num> weights;
+  num biasWeight;
 
-  Preceptor(num amountInputs,
-    {num bias = 1,
-      num function(num input, num weight, num bias) = defaultFunction}){
+  Preceptor(num amountInputs, {
+    this.bias = 1,
+    this.learning_rate = 0.1,
+    this.activationFunction(num input) = defaultActivationFunction}){
 
     weights = List(amountInputs);
     Random r = Random();
     for(int i = 0; i < amountInputs; i++){
-      weights[i] = (r.nextInt(10) - 5);
+      weights[i] = r.nextInt(10) - 5;
     }
+    biasWeight = r.nextInt(10) - 5;
   }
 
   /// Returns either 1 or -1 for given input (for now at least)
   num guess(List<num> input){
     num sum = 0;
     for(int i = 0; i < input.length; i++){
-      sum += defaultFunction(input[i], weights[i], _bias);
+      sum += weights[i] * input[i];
     }
-    return sum >= 0 ? 1 : -1;
+
+    sum += biasWeight * bias;
+
+    return this.activationFunction(sum);
   }
 
   void train(List<num> input, num target){
@@ -31,15 +38,15 @@ class Preceptor {
     num error = target - guess;
 
     for(int i = 0; i < input.length; i++){
-      weights[i] += error * input[i] * _learning_rate;
+      weights[i] += error * input[i] * learning_rate;
     }
+
+    biasWeight += error * bias * learning_rate;
   }
 }
 
-/// very basic function
-/// y = mx + q
-num defaultFunction(num input, num weight, num bias){
-  //very basic function
-  // y = mx + q
-  return weight * input + bias;
+/// very basic activation function
+/// returns 1 if bigger than or equal to 0 and otherwise -1
+num defaultActivationFunction(num input){
+  return input >= 1 ? 1 : -1;
 }

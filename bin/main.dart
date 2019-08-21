@@ -59,7 +59,7 @@ main(List<String> arguments) {
 
   print("\n---------------------------------------\n");
 
-  print("Weights after each training\n");
+  //print("Weights after each training\n");
 
   for(int i = 0; i < 20; i++) {
     exampleData.forEach((obj) {
@@ -72,6 +72,9 @@ main(List<String> arguments) {
 
   print("\n Final weights:");
   print(preceptor.weights);
+
+  print("\nFinal bias: ");
+  print((preceptor.bias * preceptor.biasWeight));
 
   print("\n---------------------------------------\n");
 
