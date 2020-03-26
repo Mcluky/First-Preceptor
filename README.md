@@ -4,3 +4,5 @@ somewhat comparable with a basic neuron of the nervous system. In this case, it 
 a value of 1 or -1.
 
 The goal of this is to make a basic and rudimentary preceptor which can later be a part in a bigger neural network. 
+
+The script in the bin/main directory tries to learn a preceptor if one should write with black or white on a given color.
